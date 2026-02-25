@@ -9,38 +9,39 @@ export async function onRequestPost(context) {
     const languages = Array.isArray(body.languages) ? body.languages : [];
 
     const countries = [
+      { country: "USA", score: 50, reasons: [], warning: "" },
       { country: "Canada", score: 50, reasons: [], warning: "" },
-      { country: "Germany", score: 50, reasons: [], warning: "" },
-      { country: "Sweden", score: 50, reasons: [], warning: "" },
+      { country: "Mexico", score: 50, reasons: [], warning: "" },
     ];
 
     if (familySize >= 4) {
-      add(countries, "Sweden", 10, "Strong family support systems & stability.");
-      add(countries, "Germany", 8, "Good infrastructure and family benefits in many regions.");
-      add(countries, "Canada", -2, "Housing costs can be challenging for larger families in major cities.");
+      add(countries, "Canada", 8, "Family-friendly services and city infrastructure can be convenient for groups.");
+      add(countries, "USA", 5, "Wide range of host cities and flights gives flexibility for families.");
+      add(countries, "Mexico", 4, "Can offer better value for larger family travel budgets.");
     }
 
     if (profession === "it") {
-      add(countries, "Germany", 10, "Large job market for tech across multiple cities.");
-      add(countries, "Sweden", 8, "Strong tech ecosystem and work-life balance.");
-      add(countries, "Canada", 6, "Solid tech market, especially around major hubs.");
+      add(countries, "USA", 10, "Large event footprint and many host city choices.");
+      add(countries, "Canada", 7, "Well-organized urban hubs and transit for major events.");
+      add(countries, "Mexico", 6, "Popular fan destination with strong match-day atmosphere.");
     } else if (profession === "healthcare") {
-      add(countries, "Germany", 9, "Healthcare demand can be strong, but credentialing matters.");
-      add(countries, "Sweden", 7, "Demand exists, but licensing can take time.");
-      add(countries, "Canada", 6, "Demand exists, but credential recognition can be slow.");
+      add(countries, "Canada", 8, "Reliable healthcare reputation can be reassuring for visitors.");
+      add(countries, "USA", 5, "Strong facilities exist, but planning insurance is important.");
+      add(countries, "Mexico", 4, "Good private options in major cities; verify coverage in advance.");
     } else if (profession === "trades") {
-      add(countries, "Germany", 8, "Skilled trades can do well; certification paths vary.");
-      add(countries, "Canada", 8, "Trades can be strong, especially outside top metros.");
-      add(countries, "Sweden", 4, "Opportunities exist but language can be more important.");
+      add(countries, "USA", 8, "Many host cities make route planning flexible.");
+      add(countries, "Canada", 6, "Good public transport in key host cities.");
+      add(countries, "Mexico", 6, "Can provide budget-friendly lodging options.");
     }
 
     if (budget === "low") {
-      add(countries, "Germany", 8, "Potentially lower upfront cost depending on city and setup.");
-      add(countries, "Sweden", 4, "Stability is good, but cost of living can be high.");
-      add(countries, "Canada", -6, "High housing costs in many areas can strain low runway.");
-      warn(countries, "Canada", "If budget is low, avoid expensive metros at first.");
+      add(countries, "Mexico", 10, "Often the strongest value destination for accommodation and daily spending.");
+      add(countries, "Canada", -3, "Costs can be high in host metros during major events.");
+      add(countries, "USA", -5, "Accommodation and match-week pricing can rise sharply.");
+      warn(countries, "USA", "If budget is low, lock accommodation early and compare nearby cities.");
     } else if (budget === "high") {
-      add(countries, "Canada", 8, "More flexibility to handle housing and settlement costs.");
+      add(countries, "USA", 8, "Higher budget unlocks more city options and flexible match itineraries.");
+      add(countries, "Canada", 5, "Comfort-focused travel options become easier.");
     }
 
     const lvlPoints = (lvl) => {
@@ -55,43 +56,43 @@ export async function onRequestPost(context) {
       const pts = lvlPoints(level);
 
       if (code === "en") {
-        add(countries, "Canada", Math.min(10, pts), "English comfort improves job and daily-life options.");
-        add(countries, "Sweden", Math.min(5, Math.round(pts / 2)), "English helps initially, but local language helps long-term.");
-        add(countries, "Germany", Math.min(4, Math.round(pts / 3)), "English can work in some jobs; German helps more.");
+        add(countries, "USA", Math.min(12, pts + 1), "English is a strong advantage for navigating travel and match logistics.");
+        add(countries, "Canada", Math.min(10, pts), "English helps for transit, booking, and fan services.");
+        add(countries, "Mexico", Math.min(4, Math.round(pts / 3)), "English works in many tourist zones, but basic Spanish helps.");
       }
 
       if (code === "de") {
-        add(countries, "Germany", Math.min(12, pts + 2), "German gives a strong advantage for jobs and bureaucracy.");
+        add(countries, "USA", Math.min(4, Math.round(pts / 2)), "German can still help with fellow fans and travel communities.");
       }
 
       if (code === "sv") {
-        add(countries, "Sweden", Math.min(12, pts + 2), "Swedish gives a strong advantage for integration and jobs.");
+        add(countries, "Canada", Math.min(4, Math.round(pts / 2)), "Nordic language background can help with multilingual adaptation.");
       }
 
       if (code === "fr") {
-        add(countries, "Canada", Math.min(6, Math.round(pts / 2) + 2), "French can be an advantage in parts of Canada.");
+        add(countries, "Canada", Math.min(10, Math.round(pts / 2) + 4), "French is a strong plus for Québec and bilingual services.");
       }
     }
 
     if (goal === "income") {
-      add(countries, "Canada", 6, "Potential for higher salaries in some sectors.");
-      add(countries, "Germany", 4, "Strong economy and job market, varies by industry.");
-      add(countries, "Sweden", 2, "Good stability; salaries can be lower than some markets.");
+      add(countries, "USA", 8, "More premium travel and hospitality options for high-spend trips.");
+      add(countries, "Canada", 4, "Balanced quality and comfort for value-conscious visitors.");
+      add(countries, "Mexico", 3, "Budget can stretch further with smart planning.");
     } else if (goal === "safety") {
-      add(countries, "Sweden", 8, "High stability and strong social systems.");
-      add(countries, "Germany", 6, "Strong infrastructure and safety in many areas.");
+      add(countries, "Canada", 8, "Often preferred for predictable, family-friendly trip planning.");
+      add(countries, "USA", 4, "Safe experiences are common with clear itinerary planning.");
     } else if (goal === "passport") {
-      add(countries, "Germany", 6, "Long-term pathways exist; requirements vary.");
-      add(countries, "Canada", 6, "Immigration pathways exist; requirements vary.");
-      add(countries, "Sweden", 5, "Pathways exist; requirements vary.");
+      add(countries, "USA", 4, "Good for short-term tourism when you prioritize major match access.");
+      add(countries, "Canada", 6, "Good for fans combining tourism with a calmer city pace.");
+      add(countries, "Mexico", 6, "Often easier for budget-friendly, football-first itineraries.");
     } else if (goal === "lifestyle") {
-      add(countries, "Sweden", 8, "Work-life balance and family life are often a strong fit.");
-      add(countries, "Germany", 5, "Good balance in many regions.");
+      add(countries, "Mexico", 8, "Strong fan culture and lively social atmosphere around matches.");
+      add(countries, "Canada", 5, "Balanced pace with reliable city services.");
     } else if (goal === "education") {
-      add(countries, "Germany", 9, "Often strong study options; details vary by program.");
-      add(countries, "Sweden", 6, "Good options; competition varies.");
-      add(countries, "Canada", 6, "Strong institutions; can be expensive.");
-      warn(countries, "Canada", "Education costs can be higher—double-check tuition and funding.");
+      add(countries, "USA", 6, "Best when combining matches with museums and major cultural sites.");
+      add(countries, "Canada", 6, "Strong option for family-friendly educational sightseeing.");
+      add(countries, "Mexico", 6, "Rich cultural history and football heritage experiences.");
+      warn(countries, "USA", "Major-event prices can spike—book flights and hotels early.");
     }
 
     for (const c of countries) {
