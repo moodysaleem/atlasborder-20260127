@@ -13,8 +13,8 @@ const langArBtn = document.getElementById("langAr");
 
 const I18N = {
   en: {
-    title: "Canada vs Germany vs Sweden",
-    subtitle: "2-minute test. No login. Get a ranked recommendation based on your situation.",
+    title: "World Cup 2026 Visitor Planner",
+    subtitle: "2-minute bilingual planner for fans visiting USA, Canada, or Mexico.",
     q1: "1) Family size",
     q2: "2) Profession",
     q3: "3) Budget / savings (rough)",
@@ -28,11 +28,12 @@ const I18N = {
     runnerups: "Runner-ups",
     nextsteps: "Next steps (practical, calming)",
     nextsteps_desc: "You don’t need to solve everything today. Pick one small step below and move forward.",
-    links_note: "Links are suggestions. Replace or add affiliate links later.",
+    links_note: "Partner links may earn us a commission at no extra cost to you.",
     email_title: "Get a personalized checklist",
     email_desc: "Optional: leave your email and we’ll show a checklist idea you can follow. (MVP placeholder)",
     email_btn: "Send",
     disclaimer: "Disclaimer: This tool is informational and not legal advice. Always verify details with official sources.",
+    affiliate_disclaimer: "Affiliate disclosure: We may earn a commission when you purchase through partner links.",
     budget_low: "Low",
     budget_mid: "Medium",
     budget_high: "High",
@@ -54,8 +55,8 @@ const I18N = {
     confidence: "Confidence"
   },
   ar: {
-    title: "كندا vs ألمانيا vs السويد",
-    subtitle: "اختبار لمدة دقيقتين. بدون تسجيل. ستحصل على توصية مرتّبة حسب وضعك.",
+    title: "مخطط زيارة كأس العالم ٢٠٢٦",
+    subtitle: "مخطط ثنائي اللغة خلال دقيقتين لمشجعي كأس العالم في أمريكا وكندا والمكسيك.",
     q1: "١) حجم العائلة",
     q2: "٢) المهنة",
     q3: "٣) الميزانية / الادخار (تقريباً)",
@@ -69,11 +70,12 @@ const I18N = {
     runnerups: "بدائل قريبة",
     nextsteps: "الخطوات التالية (عملية ومطمئنة)",
     nextsteps_desc: "ليس مطلوباً أن تحل كل شيء اليوم. اختر خطوة صغيرة واحدة وابدأ.",
-    links_note: "هذه روابط مقترحة. يمكنك لاحقاً استبدالها أو إضافة روابط أفلييت.",
+    links_note: "روابط الشركاء قد تمنحنا عمولة بدون أي تكلفة إضافية عليك.",
     email_title: "احصل على قائمة خطوات شخصية",
     email_desc: "اختياري: اترك بريدك وسنعرض فكرة قائمة خطوات يمكنك اتباعها. (نسخة أولية)",
     email_btn: "إرسال",
     disclaimer: "تنبيه: هذه أداة معلوماتية وليست استشارة قانونية. تحقق دائماً من التفاصيل عبر المصادر الرسمية.",
+    affiliate_disclaimer: "إفصاح أفلييت: قد نحصل على عمولة عند الشراء عبر روابط الشركاء.",
     budget_low: "منخفضة",
     budget_mid: "متوسطة",
     budget_high: "مرتفعة",
@@ -233,9 +235,9 @@ function countryCard(item, isTop=false) {
 
 function buildLinks(topCountry, languages) {
   const official = {
-    "Canada": "https://www.canada.ca/en/services/immigration-citizenship.html",
-    "Germany": "https://www.make-it-in-germany.com/en/",
-    "Sweden": "https://www.migrationsverket.se/English.html"
+    "USA": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html",
+    "Canada": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada.html",
+    "Mexico": "https://www.inm.gob.mx/gobmx/word/index.php/paises-requieren-visa-para-mexico/"
   };
 
   const langResources = {
@@ -248,19 +250,46 @@ function buildLinks(topCountry, languages) {
   const cards = [];
 
   cards.push({
-    title: currentLang === "ar" ? "١) ابدأ بالمصدر الرسمي" : "1) Start with the official source",
+    title: currentLang === "ar" ? "١) متطلبات الدخول الرسمية" : "1) Official entry requirements",
     desc: currentLang === "ar"
-      ? "حتى لو كانت النتيجة مشجعة، تحقق من الشروط الرسمية لتخفيف القلق وتجنب المفاجآت."
-      : "Even if the result looks promising, verify requirements from the official source to reduce uncertainty.",
+      ? "تحقق من متطلبات التأشيرة والدخول للوجهة المقترحة قبل حجز أي خدمة."
+      : "Verify visa and entry rules for your top destination before booking anything.",
     href: official[topCountry] || "#",
-    label: currentLang === "ar" ? "افتح الموقع الرسمي" : "Open official site"
+    label: currentLang === "ar" ? "افتح المصدر الرسمي" : "Open official source"
+  });
+
+  cards.push({
+    title: currentLang === "ar" ? "٢) شريحة eSIM للملاعب والتنقل" : "2) eSIM for stadium days",
+    desc: currentLang === "ar"
+      ? "ابقَ متصلاً في يوم المباراة والمطار والتنقل داخل المدينة."
+      : "Stay connected on match days, at airports, and across host cities.",
+    href: "https://www.airalo.com/",
+    label: currentLang === "ar" ? "قارن باقات eSIM" : "Compare eSIM plans"
+  });
+
+  cards.push({
+    title: currentLang === "ar" ? "٣) تأمين سفر قبل الرحلة" : "3) Travel insurance before departure",
+    desc: currentLang === "ar"
+      ? "غطِّ حالات الطوارئ الطبية أو تأخير الرحلات خلال بطولة كأس العالم."
+      : "Cover medical emergencies or trip disruption during the World Cup.",
+    href: "https://safetywing.com/",
+    label: currentLang === "ar" ? "استكشف التأمين" : "See travel insurance"
+  });
+
+  cards.push({
+    title: currentLang === "ar" ? "٤) تحويل أموال بسرعة" : "4) Fast money transfer options",
+    desc: currentLang === "ar"
+      ? "لإرسال دعم للعائلة أو تجهيز ميزانية السفر بسرعة ورسوم واضحة."
+      : "Useful for family support or trip budgeting with transparent fees.",
+    href: "https://wise.com/",
+    label: currentLang === "ar" ? "قارن التحويلات" : "Compare transfers"
   });
 
   const picked = (languages || []).slice(0, 2);
   if (picked.length) {
     const lines = picked.map(l => `${languageName(l.code)} (${levelLabel(l.level)})`).join(currentLang === "ar" ? "، " : ", ");
     cards.push({
-      title: currentLang === "ar" ? "٢) طوّر اللغة بهدوء" : "2) Improve language calmly",
+      title: currentLang === "ar" ? "٥) تعلّم عبارات السفر" : "5) Learn quick travel phrases",
       desc: currentLang === "ar"
         ? `اختر خطوة صغيرة: اختبار مستوى + خطة تعلّم. أنت اخترت: ${lines}.`
         : `Pick one small step: level test + learning plan. You selected: ${lines}.`,
@@ -268,7 +297,7 @@ function buildLinks(topCountry, languages) {
       label: currentLang === "ar" ? "ابدأ تعلّم اللغة" : "Start learning"
     });
     cards.push({
-      title: currentLang === "ar" ? "٣) اختبر مستواك (مجاني)" : "3) Test your level (free)",
+      title: currentLang === "ar" ? "٦) اختبار مستوى سريع (مجاني)" : "6) Quick level test (free)",
       desc: currentLang === "ar"
         ? "الاختبار يعطيك وضوحاً ويقلل القلق لأنك تعرف أين تقف."
         : "A quick test gives clarity and reduces stress because you know where you stand.",
@@ -277,7 +306,7 @@ function buildLinks(topCountry, languages) {
     });
   } else {
     cards.push({
-      title: currentLang === "ar" ? "٢) اللغة أولاً (خطوة واحدة)" : "2) Language first (one step)",
+      title: currentLang === "ar" ? "٥) اللغة أولاً (خطوة واحدة)" : "5) Language first (one step)",
       desc: currentLang === "ar"
         ? "إذا لم تختر لغة، لا مشكلة. ابدأ باختبار بسيط لمعرفة مستواك."
         : "If you didn’t select any language, that’s okay. Start with a simple test to see your level.",
@@ -287,10 +316,10 @@ function buildLinks(topCountry, languages) {
   }
 
   cards.push({
-    title: currentLang === "ar" ? "٤) تقدير تكلفة السكن" : "4) Estimate housing costs",
+    title: currentLang === "ar" ? "٧) تقدير تكاليف الرحلة" : "7) Estimate trip costs",
     desc: currentLang === "ar"
-      ? "السكن هو أكبر مصدر للضغط. معرفة النطاقات مبكراً تمنحك راحة."
-      : "Housing is the biggest stress driver. Knowing ranges early gives peace of mind.",
+      ? "اعرف تكاليف الفندق والمواصلات والطعام مبكراً لتفادي المفاجآت."
+      : "Estimate hotels, transport, and food early to avoid surprises.",
     href: "https://www.numbeo.com/cost-of-living/",
     label: currentLang === "ar" ? "قارن التكاليف" : "Compare costs"
   });
